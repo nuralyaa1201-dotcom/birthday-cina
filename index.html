@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alien Birthday Transmission 👽</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at top, #25204e, #090914 70%);
+  color: white;
+  font-family: "Courier New", monospace;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+.star {
+  position: fixed;
+  color: #fff8ad;
+  animation: twinkle 2s infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes twinkle {
+  from { opacity: .2; transform: scale(.7); }
+  to { opacity: 1; transform: scale(1.3); }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: min(92%, 520px);
+  margin: auto;
+  padding: 35px 0 50px;
+}
+
+.tag {
+  color: #b8fffa;
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+h1 {
+  font-size: clamp(25px, 7vw, 36px);
+  color: #e8baff;
+  text-shadow: 0 0 18px #b85cff;
+  margin-bottom: 8px;
+}
+
+.alien {
+  position: relative;
+  display: inline-block;
+  margin: 25px 0 15px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+
+.antenna {
+  font-size: 35px;
+  line-height: 1;
+  margin-bottom: -5px;
+}
+
+.cat {
+  position: relative;
+  width: 190px;
+  height: 145px;
+  background: #a6ffb9;
+  border: 4px solid #e3ffe8;
+  border-radius: 48% 48% 43% 43%;
+  box-shadow: 0 0 35px #70ffad;
+  margin: auto;
+}
+
+.ear {
+  position: absolute;
+  top: -20px;
+  width: 65px;
+  height: 70px;
+  background: #a6ffb9;
+  border: 4px solid #e3ffe8;
+  z-index: -1;
+}
+
+.ear.left {
+  left: -4px;
+  transform: rotate(-25deg);
+  clip-path: polygon(0 0, 100% 40%, 30% 100%);
+}
+
+.ear.right {
+  right: -4px;
+  transform: rotate(25deg);
+  clip-path: polygon(100% 0, 70% 100%, 0 40%);
+}
+
+.eyes {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding-top: 35px;
+}
+
+.eye {
+  width: 53px;
+  height: 66px;
+  background: #100e25;
+  border: 4px solid #eaffee;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #fff;
+  position: relative;
+}
+
+.eye::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 13px;
+  height: 17px;
+  border-radius: 50%;
+  background: white;
+}
+
+.nose {
+  font-size: 23px;
+  color: #38234b;
+  margin-top: -2px;
+}
+
+.cat-label {
+  font-size: 12px;
+  color: #a6ffb9;
+  margin-top: 12px;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  color: #c8c4e9;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 20px auto;
+}
+
+button {
+  background: #d9a8ff;
+  color: #171024;
+  border: 2px solid white;
+  padding: 14px 22px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 0 18px #bd79ff;
+  transition: .2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.envelope-area {
+  margin: 35px auto 20px;
+  perspective: 800px;
+}
+
+.envelope {
+  width: 250px;
+  height: 165px;
+  margin: auto;
+  position: relative;
+  cursor: pointer;
+  background: #c49be9;
+  border-radius: 5px;
+  box-shadow: 0 0 25px #ad75e8;
+  transition: transform .5s;
+}
+
+.envelope:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e1c5ff;
+  clip-path: polygon(0 0, 50% 58%, 100% 0);
+  transform-origin: top;
+  transition: transform .7s;
+  z-index: 3;
+}
+
+.envelope:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #b78add;
+  clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+  z-index: 2;
+}
+
+.envelope.open:before {
+  transform: rotateX(180deg);
+}
+
+.letter {
+  position: absolute;
+  z-index: 1;
+  background: #fff9e8;
+  color: #282039;
+  width: 90%;
+  height: 90%;
+  left: 5%;
+  top: 5%;
+  padding: 12px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .8s;
+}
+
+.envelope.open .letter {
+  transform: translateY(-100px);
+}
+
+#message {
+  display: none;
+  text-align: left;
+  background: rgba(255, 249, 232, .97);
+  color: #29213b;
+  border: 2px solid #d8b5ff;
+  border-radius: 12px;
+  padding: 22px;
+  margin-top: 45px;
+  line-height: 1.85;
+  font-size: 13px;
+  white-space: pre-line;
+  box-shadow: 0 0 30px #ad75e8;
+  animation: appear .8s ease;
+}
+
+#message h2 {
+  text-align: center;
+  color: #7543a6;
+  font-size: 19px;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.footer {
+  margin-top: 30px;
+  color: #8f8ba9;
+  font-size: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<div class="container">
+  <div class="tag">✦ INCOMING TRANSMISSION ✦</div>
+
+  <h1>HAPPY BIRTHDAY, CINA.</h1>
+
+  <div class="alien">
+    <div class="antenna">👽</div>
+    <div class="cat">
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+      <div class="eyes">
+        <div class="eye"></div>
+        <div class="eye"></div>
+      </div>
+      <div class="nose">ω</div>
+    </div>
+  </div>
+
+  <div class="cat-label">ALIEN CAT HAS ARRIVED.</div>
+
+  <p class="subtitle">
+    Your birthday transmission has been detected.<br>
+    A highly questionable creature has a message for you.
+  </p>
+
+  <button onclick="openLetter()">OPEN YOUR TRANSMISSION 👽</button>
+
+  <div class="envelope-area">
+    <div class="envelope" id="envelope" onclick="openLetter()">
+      <div class="letter">TOP SECRET<br>FROM EARTH 🌎</div>
+    </div>
+  </div>
+
+  <p class="subtitle">↑ CLICK THE ENVELOPE, HUMAN ↑</p>
+
+  <div id="message">
+    <h2>✦ MESSAGE DECRYPTED ✦</h2>
+    <div id="letterText"></div>
+  </div>
+
+  <div class="footer">
+    SYSTEM STATUS: FRIENDSHIP INTACT // ALIEN CAT APPROVES
+  </div>
+</div>
+
+<script>
+const stars = document.getElementById("stars");
+
+for (let i = 0; i < 75; i++) {
+  const star = document.createElement("span");
+  star.className = "star";
+  star.textContent = Math.random() > 0.5 ? "✦" : "·";
+  star.style.left = Math.random() * 100 + "%";
+  star.style.top = Math.random() * 100 + "%";
+  star.style.fontSize = (Math.random() * 15 + 7) + "px";
+  star.style.animationDelay = Math.random() * 3 + "s";
+  stars.appendChild(star);
+}
+
+const birthdayMessage = `Hey, cina.
+
+Congratulations! You've successfully survived another 365 days in this chaotic simulation called life. HAHAHAHA.
+
+Semoga umur baru ni brings more happiness, rezeki, good memories and opportunities yang kau deserve. Kalau hidup ni ada bugs, I hope you always find the strength to debug them, one by one.
+
+Thanks for being part of my storyline. Out of all the random people I've encountered in this server, I'm glad our paths crossed. Tak semua hari akan jadi easy, but I hope you never forget that you're someone worth appreciating.
+
+One last thing, weh. Jangan give up on yourself, okay? Aku harap satu hari nanti kau tengok balik semua benda yang kau dah lalui and realize how far you've come.
+
+// End of message. Not the end of our friendship.
+
+Stay weird, stay genuine, and keep being you. See you in the next chapter, Putra kerajaan cina.`;
+
+let opened = false;
+
+function openLetter() {
+  if (opened) return;
+  opened = true;
+
+  document.getElementById("envelope").classList.add("open");
+
+  setTimeout(() => {
+    document.getElementById("message").style.display = "block";
+    document.getElementById("letterText").textContent = birthdayMessage;
+    document.getElementById("message").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }, 700);
+}
+</script>
+
+</body>
+</html>
